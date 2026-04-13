@@ -4,6 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>airBaltic - New Routes Campaign</title>
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""
+  />
   <style>
     :root {
       --bg: #eef3fb;
@@ -319,6 +325,96 @@
 
     .route-list li { margin-bottom: 3px; }
 
+    .routes-overview {
+      margin-top: 22px;
+      border: 1px solid #d0dced;
+      border-radius: 16px;
+      background: linear-gradient(165deg, #ffffff 0%, #f4f8ff 100%);
+      padding: 18px;
+      box-shadow: 0 8px 20px rgba(15, 39, 74, 0.06);
+    }
+
+    .routes-overview h3 {
+      margin: 0;
+      color: #113b79;
+      font-size: 24px;
+    }
+
+    .routes-overview .intro {
+      margin: 6px 0 14px;
+      color: #324158;
+    }
+
+    .routes-detail-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    @media (min-width: 980px) {
+      .routes-detail-layout {
+        grid-template-columns: minmax(320px, 0.95fr) minmax(420px, 1.05fr);
+      }
+    }
+
+    .routes-base-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .base-btn {
+      border: 1px solid #d8e2f0;
+      background: #f6f9ff;
+      color: #1f3150;
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.18s ease;
+    }
+
+    .base-btn.active {
+      border-color: #113b79;
+      background: #113b79;
+      color: #ffffff;
+    }
+
+    .base-destinations {
+      border: 1px solid #d8e2f0;
+      border-radius: 12px;
+      background: #fbfdff;
+      padding: 12px;
+      min-height: 120px;
+    }
+
+    .base-destinations h4 {
+      margin: 0 0 8px;
+      color: #113b79;
+      font-size: 16px;
+    }
+
+    .map-card h4 {
+      margin: 0;
+      color: #113b79;
+      font-size: 18px;
+    }
+
+    .map-card p {
+      margin: 6px 0 10px;
+      color: #324158;
+      font-size: 14px;
+    }
+
+    #routeMap {
+      height: 360px;
+      width: 100%;
+      border-radius: 10px;
+      border: 1px solid #d8e2f0;
+      overflow: hidden;
+    }
+
     .promo {
       margin-top: 20px;
       display: grid;
@@ -389,39 +485,33 @@
       </div>
     </section>
 
-    <section class="grid">
-      <article class="card">
-        <h3 id="routesA"></h3>
-        <ul class="route-list" id="listA"></ul>
-      </article>
-      <article class="card">
-        <h3 id="routesB"></h3>
-        <ul class="route-list" id="listB"></ul>
-      </article>
-      <article class="card">
-        <h3 id="routesC"></h3>
-        <ul class="route-list" id="listC"></ul>
-      </article>
-      <article class="card">
-        <h3 id="routesD"></h3>
-        <ul class="route-list" id="listD"></ul>
-      </article>
-    </section>
-
-    <section class="promo">
-      <article class="panel">
-        <p class="panel-title" id="socialTitle"></p>
-        <p class="ad-copy" id="socialCopy"></p>
-      </article>
-      <article class="panel">
-        <p class="panel-title" id="premiumTitle"></p>
-        <p class="ad-copy" id="premiumCopy"></p>
-      </article>
+    <section class="routes-overview" id="routesSection">
+      <h3 id="allRoutesTitle"></h3>
+      <p class="intro" id="allRoutesIntro"></p>
+      <div class="routes-detail-layout">
+        <div>
+          <div class="routes-base-tabs" id="baseTabs"></div>
+          <div class="base-destinations">
+            <h4 id="baseTitle"></h4>
+            <ul class="route-list" id="baseDestinationsList"></ul>
+          </div>
+        </div>
+        <div class="map-card">
+          <h4 id="mapTitle"></h4>
+          <p id="mapIntro"></p>
+          <div id="routeMap" aria-label="Route map"></div>
+        </div>
+      </div>
     </section>
 
     <footer id="footnote"></footer>
   </div>
 
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""
+  ></script>
   <script>
     const translations = {
       en: {
@@ -438,10 +528,11 @@
         listC: ["Warsaw", "Poznan", "Katowice", "Liege"],
         routesD: "From Tenerife & Kuusamo",
         listD: ["Tenerife: Liege, Ljubljana, Palanga", "Kuusamo: Berlin, Hamburg, Manchester, London Gatwick"],
-        socialTitle: "Instagram/Facebook style",
-        socialCopy: "New routes announced by airBaltic for 2026/27. City breaks, winter escapes, and unforgettable north adventures. Book early and travel smarter.",
-        premiumTitle: "Premium print style",
-        premiumCopy: "The world opens wider with airBaltic. Discover newly announced connections across Europe and reserve early for refined, reliable travel.",
+        allRoutesTitle: "Route overview",
+        allRoutesIntro: "Browse all announced routes by origin city.",
+        allBases: "All bases",
+        mapTitle: "Route map",
+        mapIntro: "Only selected base routes are shown.",
         footnote: "Demo ad page created for campaign drafting. Please verify final route schedule before publication."
       },
       lv: {
@@ -458,10 +549,11 @@
         listC: ["Varšava", "Poznaņa", "Katovice", "Ljēža"],
         routesD: "No Tenerifes un Kuusamo",
         listD: ["Tenerife: Ljēža, Ļubļana, Palanga", "Kuusamo: Berlīne, Hamburga, Mančestra, Londona Getvika"],
-        socialTitle: "Instagram/Facebook stils",
-        socialCopy: "airBaltic paziņo jaunus maršrutus 2026./27. gadam. Pilsētu ceļojumi, ziemas atpūta un ziemeļu piedzīvojumi. Rezervē laikus un ceļo gudrāk.",
-        premiumTitle: "Premium drukas stils",
-        premiumCopy: "Pasaule kļūst tuvāka ar airBaltic. Atklāj jaunus maršrutus Eiropā un rezervē laikus kvalitatīvam, uzticamam ceļojumam.",
+        allRoutesTitle: "Maršrutu pārskats",
+        allRoutesIntro: "Skatiet visus paziņotos maršrutus pēc izlidošanas pilsētas.",
+        allBases: "Visas bāzes",
+        mapTitle: "Maršrutu karte",
+        mapIntro: "Kartē redzami tikai izvēlētās bāzes maršruti.",
         footnote: "Demonstrācijas reklāmas lapa kampaņas skicēm. Pirms publicēšanas pārbaudiet gala lidojumu grafiku."
       },
       lt: {
@@ -478,10 +570,11 @@
         listC: ["Varsuva", "Poznane", "Katovicai", "Liezas"],
         routesD: "Is Tenerifes ir Kuusamo",
         listD: ["Tenerife: Liezas, Liubliana, Palanga", "Kuusamas: Berlynas, Hamburgas, Mancesteris, Londonas Getvikas"],
-        socialTitle: "Instagram/Facebook stilius",
-        socialCopy: "airBaltic paskelbe naujus 2026/27 m. marsrutus. Miestu savaitgaliai, ziemos kryptys ir nepamirstami siaures nuotykiai. Rezervuokite anksciau.",
-        premiumTitle: "Premium spaudos stilius",
-        premiumCopy: "Su airBaltic pasaulis tampa arciau. Atraskite naujai paskelbtus marsrutus Europoje ir rezervuokite anksciau kokybiskai kelionei.",
+        allRoutesTitle: "Marsrutu apzvalga",
+        allRoutesIntro: "Perziurekite visus paskelbtus marsrutus pagal isvykimo miesta.",
+        allBases: "Visos bazes",
+        mapTitle: "Marsrutu zemelapis",
+        mapIntro: "Rodomi tik pasirinktos bazes marsrutai.",
         footnote: "Demonstracinis reklamos puslapis kampanijos juodrasciui. Pries publikuojant patikrinkite galutinius tvarkarascius."
       },
       et: {
@@ -498,10 +591,11 @@
         listC: ["Varssavi", "Poznan", "Katowice", "Liege"],
         routesD: "Tenerifelt ja Kuusamost",
         listD: ["Tenerife: Liege, Ljubljana, Palanga", "Kuusamo: Berliin, Hamburg, Manchester, London Gatwick"],
-        socialTitle: "Instagram/Facebook stiil",
-        socialCopy: "airBaltic teatab uutest 2026/27 liinidest. Linnareisid, talvepuhkused ja pohjamaised seiklused. Broneeri varakult ja reisi targemalt.",
-        premiumTitle: "Premium trukireklaam",
-        premiumCopy: "Maailm avaneb airBalticuga laiemalt. Avasta uued liinid ule Euroopa ja broneeri varakult kvaliteetseks reisikogemuseks.",
+        allRoutesTitle: "Liinide ulevaade",
+        allRoutesIntro: "Sirvi koiki valja kuulutatud liine valjumislinnade kaupa.",
+        allBases: "Koik baasid",
+        mapTitle: "Liinide kaart",
+        mapIntro: "Kaardil kuvatakse ainult valitud baasi liinid.",
         footnote: "Reklaami demo koduleht kampaania mustandiks. Enne avaldamist kinnita loplik lennuplaan."
       },
       de: {
@@ -518,10 +612,11 @@
         listC: ["Warschau", "Posen", "Kattowitz", "Luttich"],
         routesD: "Ab Teneriffa & Kuusamo",
         listD: ["Teneriffa: Luttich, Ljubljana, Palanga", "Kuusamo: Berlin, Hamburg, Manchester, London Gatwick"],
-        socialTitle: "Instagram/Facebook Stil",
-        socialCopy: "Neue airBaltic Routen fur 2026/27. City-Trips, Winterziele und unvergessliche nordische Abenteuer. Fruh buchen lohnt sich.",
-        premiumTitle: "Premium Print Stil",
-        premiumCopy: "Mit airBaltic wird die Welt groBer. Entdecken Sie neue Verbindungen in Europa und buchen Sie fruh fur eine hochwertige Reiseerfahrung.",
+        allRoutesTitle: "Routenubersicht",
+        allRoutesIntro: "Alle angekundigten Routen nach Abflugstadt im Uberblick.",
+        allBases: "Alle Basen",
+        mapTitle: "Routenkarte",
+        mapIntro: "Es werden nur Routen der gewahlten Basis angezeigt.",
         footnote: "Demo-Anzeigenseite fur Kampagnenentwurfe. Bitte finalen Flugplan vor Veroffentlichung prufen."
       }
     };
@@ -531,16 +626,47 @@
       subtitle: "subtitle",
       ctaPrimary: "ctaPrimary",
       ctaSecondary: "ctaSecondary",
-      routesA: "routesA",
-      routesB: "routesB",
-      routesC: "routesC",
-      routesD: "routesD",
-      socialTitle: "socialTitle",
-      socialCopy: "socialCopy",
-      premiumTitle: "premiumTitle",
-      premiumCopy: "premiumCopy",
+      allRoutesTitle: "allRoutesTitle",
+      allRoutesIntro: "allRoutesIntro",
+      mapTitle: "mapTitle",
+      mapIntro: "mapIntro",
       footnote: "footnote"
     };
+
+    const cityMapData = {
+      riga: { label: "Riga", lat: 56.9496, lng: 24.1052 },
+      tallinn: { label: "Tallinn", lat: 59.437, lng: 24.7536 },
+      granCanaria: { label: "Gran Canaria", lat: 27.9202, lng: -15.5474 },
+      tenerife: { label: "Tenerife", lat: 28.2916, lng: -16.6291 },
+      kuusamo: { label: "Kuusamo", lat: 65.9651, lng: 29.1887 },
+      kaunas: { label: "Kaunas", lat: 54.8985, lng: 23.9036 },
+      warsaw: { label: "Warsaw", lat: 52.2297, lng: 21.0122 },
+      oulu: { label: "Oulu", lat: 65.0121, lng: 25.4651 },
+      antalya: { label: "Antalya", lat: 36.8969, lng: 30.7133 },
+      gothenburg: { label: "Gothenburg", lat: 57.7089, lng: 11.9746 },
+      vienna: { label: "Vienna", lat: 48.2082, lng: 16.3738 },
+      hamburg: { label: "Hamburg", lat: 53.5511, lng: 9.9937 },
+      poznan: { label: "Poznan", lat: 52.4064, lng: 16.9252 },
+      katowice: { label: "Katowice", lat: 50.2649, lng: 19.0238 },
+      liege: { label: "Liege", lat: 50.6326, lng: 5.5797 },
+      ljubljana: { label: "Ljubljana", lat: 46.0569, lng: 14.5058 },
+      palanga: { label: "Palanga", lat: 55.9203, lng: 21.0676 },
+      berlin: { label: "Berlin", lat: 52.52, lng: 13.405 },
+      manchester: { label: "Manchester", lat: 53.4808, lng: -2.2426 },
+      londonGatwick: { label: "London Gatwick", lat: 51.1537, lng: -0.1821 }
+    };
+
+    const routeNetwork = [
+      { origin: "riga", destinations: ["kaunas", "warsaw", "oulu", "antalya", "gothenburg", "kuusamo"] },
+      { origin: "tallinn", destinations: ["vienna", "hamburg"] },
+      { origin: "granCanaria", destinations: ["warsaw", "poznan", "katowice", "liege"] },
+      { origin: "tenerife", destinations: ["liege", "ljubljana", "palanga"] },
+      { origin: "kuusamo", destinations: ["berlin", "hamburg", "manchester", "londonGatwick"] }
+    ];
+
+    let routeMap;
+    let routeLayers;
+    let selectedBaseMode = "all";
 
     function renderList(targetId, items) {
       const el = document.getElementById(targetId);
@@ -552,19 +678,124 @@
       Object.keys(ids).forEach((key) => {
         document.getElementById(ids[key]).textContent = t[key];
       });
-      renderList("listA", t.listA);
-      renderList("listB", t.listB);
-      renderList("listC", t.listC);
-      renderList("listD", t.listD);
       const chips = [...t.listA.slice(0, 4), ...t.listB.slice(0, 2)];
       document.getElementById("routeChips").innerHTML = chips
         .map((item, index) => `<span class="chip ${index < 2 ? "hot" : ""}">${item}</span>`)
         .join("");
+      renderAllRoutesPanel(t);
+      renderRouteMap();
 
       document.querySelectorAll(".lang-btn").forEach((btn) => {
         btn.classList.toggle("active", btn.dataset.lang === lang);
       });
       document.documentElement.lang = lang;
+    }
+
+    function setupRouteMap() {
+      routeMap = L.map("routeMap", { zoomControl: true, preferCanvas: true }).setView([53.3, 14.0], 4);
+      L.tileLayer("https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png", {
+        maxZoom: 8,
+        subdomains: "abcd",
+        attribution: "&copy; OpenStreetMap contributors &copy; CARTO"
+      }).addTo(routeMap);
+      routeLayers = L.layerGroup().addTo(routeMap);
+    }
+
+    function renderRouteMap() {
+      if (!routeMap || !routeLayers) return;
+      routeLayers.clearLayers();
+      const citySet = new Set();
+      const bounds = [];
+      const allowedOrigins =
+        selectedBaseMode === "all"
+          ? ["riga", "tallinn", "granCanaria", "tenerife", "kuusamo"]
+          : selectedBaseMode === "tenerifeKuusamo"
+            ? ["tenerife", "kuusamo"]
+            : [selectedBaseMode];
+
+      routeNetwork.forEach((route) => {
+        if (!allowedOrigins.includes(route.origin)) return;
+        const origin = cityMapData[route.origin];
+        citySet.add(route.origin);
+        bounds.push([origin.lat, origin.lng]);
+        route.destinations.forEach((destinationKey) => {
+          const destination = cityMapData[destinationKey];
+          citySet.add(destinationKey);
+          bounds.push([destination.lat, destination.lng]);
+          const curvePath = [
+            [origin.lat, origin.lng],
+            [(origin.lat + destination.lat) / 2, (origin.lng + destination.lng) / 2],
+            [destination.lat, destination.lng]
+          ];
+          L.polyline(curvePath, { color: "#9bcc3b", weight: 5, opacity: 0.12, lineCap: "round" }).addTo(routeLayers);
+          L.polyline(curvePath, { color: "#6ea700", weight: 2.2, opacity: 0.9, lineCap: "round" }).addTo(routeLayers);
+        });
+      });
+
+      citySet.forEach((cityKey) => {
+        const city = cityMapData[cityKey];
+        const isOrigin = routeNetwork.some((r) => r.origin === cityKey);
+        L.circleMarker([city.lat, city.lng], {
+          radius: isOrigin ? 6.6 : 4.4,
+          color: isOrigin ? "#1b3561" : "#6ea700",
+          fillColor: isOrigin ? "#9bcc3b" : "#f7fbef",
+          fillOpacity: 1,
+          weight: isOrigin ? 2.4 : 1.8
+        })
+          .bindTooltip(city.label, { permanent: false, direction: "top", offset: [0, -6], opacity: 0.95 })
+          .addTo(routeLayers);
+      });
+
+      if (bounds.length > 0) {
+        routeMap.fitBounds(bounds, { padding: [24, 24] });
+      }
+      setTimeout(() => routeMap.invalidateSize(), 0);
+    }
+
+    function renderAllRoutesPanel(t) {
+      const groups = [
+        { key: "riga", title: t.routesA, items: t.listA },
+        { key: "tallinn", title: t.routesB, items: t.listB },
+        { key: "granCanaria", title: t.routesC, items: t.listC },
+        { key: "tenerifeKuusamo", title: t.routesD, items: t.listD }
+      ];
+      const tabsRoot = document.getElementById("baseTabs");
+      const baseTitle = document.getElementById("baseTitle");
+      const baseList = document.getElementById("baseDestinationsList");
+
+      function selectBase(index) {
+        if (index === -1) {
+          selectedBaseMode = "all";
+          baseTitle.textContent = t.allBases || "All bases";
+          baseList.innerHTML = groups.map((g) => `<li><strong>${g.title}:</strong> ${g.items.join(", ")}</li>`).join("");
+          tabsRoot.querySelectorAll(".base-btn").forEach((btn, btnIndex) => btn.classList.toggle("active", btnIndex === 0));
+          renderRouteMap();
+          return;
+        }
+        const selected = groups[index];
+        selectedBaseMode = selected.key;
+        baseTitle.textContent = selected.title;
+        baseList.innerHTML = selected.items.map((item) => `<li>${item}</li>`).join("");
+        tabsRoot.querySelectorAll(".base-btn").forEach((btn, btnIndex) => btn.classList.toggle("active", btnIndex === index + 1));
+        renderRouteMap();
+      }
+
+      tabsRoot.innerHTML = "";
+      const allBtn = document.createElement("button");
+      allBtn.type = "button";
+      allBtn.className = "base-btn";
+      allBtn.textContent = t.allBases || "All bases";
+      allBtn.addEventListener("click", () => selectBase(-1));
+      tabsRoot.appendChild(allBtn);
+      groups.forEach((group, index) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "base-btn";
+        btn.textContent = group.title;
+        btn.addEventListener("click", () => selectBase(index));
+        tabsRoot.appendChild(btn);
+      });
+      selectBase(-1);
     }
 
     function buildLanguageButtons() {
@@ -580,6 +811,7 @@
       });
     }
 
+    setupRouteMap();
     buildLanguageButtons();
     setLanguage("en");
   </script>
