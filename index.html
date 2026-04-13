@@ -6,14 +6,14 @@
   <title>airBaltic - New Routes Campaign</title>
   <style>
     :root {
-      --bg: #0c1220;
-      --card: #121b2f;
-      --text: #eaf1ff;
-      --muted: #a8b9dd;
-      --brand: #9bdd00;
-      --brand-dark: #6ea700;
-      --accent: #3ba4ff;
-      --line: #243253;
+      --bg: #eef3fb;
+      --card: #ffffff;
+      --text: #122038;
+      --muted: #53627f;
+      --brand: #9bcc3b;
+      --brand-dark: #6b9520;
+      --accent: #113b79;
+      --line: #d6e0ee;
     }
 
     * { box-sizing: border-box; }
@@ -21,10 +21,7 @@
       margin: 0;
       font-family: "Segoe UI", Arial, sans-serif;
       color: var(--text);
-      background:
-        radial-gradient(1200px 600px at 10% -10%, #1b2b50 0%, transparent 60%),
-        radial-gradient(900px 500px at 90% -20%, #0f2c57 0%, transparent 55%),
-        var(--bg);
+      background: var(--bg);
       min-height: 100vh;
     }
 
@@ -47,7 +44,7 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      font-weight: 700;
+      font-weight: 800;
       letter-spacing: 0.2px;
     }
 
@@ -63,6 +60,28 @@
       box-shadow: 0 8px 22px rgba(155, 221, 0, 0.25);
     }
 
+    .brand-lockup {
+      display: grid;
+      gap: 2px;
+      line-height: 1.1;
+    }
+
+    .brand-main {
+      font-size: 21px;
+      color: var(--brand);
+      text-transform: lowercase;
+      letter-spacing: 0.3px;
+      font-weight: 900;
+    }
+
+    .brand-sub {
+      font-size: 11px;
+      text-transform: uppercase;
+      color: #66758f;
+      letter-spacing: 1px;
+      font-weight: 700;
+    }
+
     .lang-buttons {
       display: flex;
       gap: 8px;
@@ -71,7 +90,7 @@
 
     .lang-btn {
       border: 1px solid var(--line);
-      background: #0f1830;
+      background: #ffffff;
       color: var(--text);
       padding: 8px 12px;
       border-radius: 999px;
@@ -88,12 +107,31 @@
     }
 
     .hero {
-      background: linear-gradient(140deg, rgba(59, 164, 255, 0.16), rgba(155, 221, 0, 0.12));
-      border: 1px solid #35518b;
+      background: linear-gradient(160deg, #ffffff 0%, #f5f8ff 100%);
+      border: 1px solid #cdd9eb;
       border-radius: 20px;
       padding: 28px;
       position: relative;
       overflow: hidden;
+      box-shadow: 0 10px 30px rgba(15, 39, 74, 0.08);
+    }
+
+    .brand-strip {
+      margin: -28px -28px 18px;
+      padding: 10px 16px;
+      background: linear-gradient(90deg, var(--brand) 0 26%, #113b79 26% 100%);
+      color: #102000;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      font-size: 12px;
+    }
+
+    .brand-strip span {
+      color: #ecf3ff;
+      margin-left: 12px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
     }
 
     .hero::after {
@@ -104,7 +142,77 @@
       width: 240px;
       height: 240px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(155, 221, 0, 0.28), transparent 70%);
+      background: radial-gradient(circle, rgba(17, 59, 121, 0.14), transparent 70%);
+    }
+
+    .hero-visual {
+      margin-top: 18px;
+      display: grid;
+      gap: 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .flight-track {
+      width: min(760px, 100%);
+      height: 74px;
+      border: 1px solid #cfdbed;
+      border-radius: 999px;
+      background:
+        radial-gradient(circle at 24% 50%, rgba(155, 221, 0, 0.55) 0 7px, transparent 8px),
+        radial-gradient(circle at 52% 50%, rgba(17, 59, 121, 0.32) 0 7px, transparent 8px),
+        radial-gradient(circle at 80% 50%, rgba(155, 221, 0, 0.55) 0 7px, transparent 8px),
+        linear-gradient(90deg, rgba(155, 204, 59, 0.14), rgba(17, 59, 121, 0.08));
+      position: relative;
+      overflow: hidden;
+    }
+
+    .flight-track::before {
+      content: "";
+      position: absolute;
+      left: 16px;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      border-top: 2px dashed rgba(79, 98, 128, 0.3);
+    }
+
+    .flight-track::after {
+      content: "✈";
+      position: absolute;
+      left: 49%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: #102000;
+      background: var(--brand);
+      box-shadow: 0 0 0 5px rgba(155, 221, 0, 0.16);
+      font-size: 16px;
+    }
+
+    .visual-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chip {
+      padding: 7px 11px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      border: 1px solid #d5dfec;
+      background: #f6f9ff;
+      color: #23324d;
+    }
+
+    .chip.hot {
+      border-color: #c6dc9c;
+      background: #f1f8e3;
     }
 
     h1 {
@@ -144,9 +252,40 @@
     }
 
     .btn-secondary {
-      background: #192746;
-      border: 1px solid #30436f;
-      color: var(--text);
+      background: #113b79;
+      border: 1px solid #0c2f5f;
+      color: #ffffff;
+    }
+
+    .stats-row {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px;
+      max-width: 760px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .stat {
+      border: 1px solid #d4deed;
+      border-radius: 12px;
+      background: #f7faff;
+      padding: 10px 12px;
+    }
+
+    .stat strong {
+      display: block;
+      color: var(--brand);
+      font-size: 19px;
+      line-height: 1.1;
+    }
+
+    .stat span {
+      color: #6a7892;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
     .grid {
@@ -162,6 +301,7 @@
       border-radius: 16px;
       padding: 16px;
       min-height: 145px;
+      box-shadow: 0 8px 20px rgba(15, 39, 74, 0.06);
     }
 
     .card h3 {
@@ -172,7 +312,7 @@
     .route-list {
       margin: 0;
       padding-left: 17px;
-      color: #d6e4ff;
+      color: #2f3c54;
       line-height: 1.5;
       font-size: 14px;
     }
@@ -187,15 +327,16 @@
     }
 
     .panel {
-      background: linear-gradient(160deg, #122144 0%, #101a31 100%);
-      border: 1px solid #2b3e67;
+      background: linear-gradient(165deg, #ffffff 0%, #f4f8ff 100%);
+      border: 1px solid #d0dced;
       border-radius: 16px;
       padding: 18px;
+      box-shadow: 0 8px 20px rgba(15, 39, 74, 0.06);
     }
 
     .panel-title {
       font-size: 14px;
-      color: var(--brand);
+      color: #113b79;
       margin: 0 0 8px;
       text-transform: uppercase;
       letter-spacing: 0.6px;
@@ -204,13 +345,13 @@
 
     .ad-copy {
       margin: 0;
-      color: #e9f3ff;
+      color: #324158;
       line-height: 1.55;
     }
 
     footer {
       margin-top: 20px;
-      color: #9cb1da;
+      color: #6b7b96;
       font-size: 13px;
       text-align: center;
     }
@@ -221,17 +362,30 @@
     <div class="topbar">
       <div class="brand">
         <div class="plane">✈</div>
-        <div>airBaltic Campaign Studio</div>
+        <div class="brand-lockup">
+          <div class="brand-main">airbaltic</div>
+          <div class="brand-sub">Campaign studio</div>
+        </div>
       </div>
       <div class="lang-buttons" id="langButtons"></div>
     </div>
 
     <section class="hero">
+      <div class="brand-strip">Official route update <span>airBaltic 2026/27 network</span></div>
       <h1 id="headline"></h1>
       <p class="subtitle" id="subtitle"></p>
       <div class="cta-row">
         <a class="btn btn-primary" href="#" id="ctaPrimary"></a>
         <a class="btn btn-secondary" href="#" id="ctaSecondary"></a>
+      </div>
+      <div class="stats-row">
+        <div class="stat"><strong id="statRoutes">14+</strong><span>New routes</span></div>
+        <div class="stat"><strong id="statCities">10</strong><span>Departure cities</span></div>
+        <div class="stat"><strong id="statSeason">2026/27</strong><span>Season launch</span></div>
+      </div>
+      <div class="hero-visual">
+        <div class="flight-track" aria-hidden="true"></div>
+        <div class="visual-chips" id="routeChips"></div>
       </div>
     </section>
 
@@ -402,6 +556,10 @@
       renderList("listB", t.listB);
       renderList("listC", t.listC);
       renderList("listD", t.listD);
+      const chips = [...t.listA.slice(0, 4), ...t.listB.slice(0, 2)];
+      document.getElementById("routeChips").innerHTML = chips
+        .map((item, index) => `<span class="chip ${index < 2 ? "hot" : ""}">${item}</span>`)
+        .join("");
 
       document.querySelectorAll(".lang-btn").forEach((btn) => {
         btn.classList.toggle("active", btn.dataset.lang === lang);
