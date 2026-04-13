@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>airBaltic - New Routes Campaign</title>
+  <style>
+    :root {
+      --bg: #0c1220;
+      --card: #121b2f;
+      --text: #eaf1ff;
+      --muted: #a8b9dd;
+      --brand: #9bdd00;
+      --brand-dark: #6ea700;
+      --accent: #3ba4ff;
+      --line: #243253;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(1200px 600px at 10% -10%, #1b2b50 0%, transparent 60%),
+        radial-gradient(900px 500px at 90% -20%, #0f2c57 0%, transparent 55%),
+        var(--bg);
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 20px 60px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      letter-spacing: 0.2px;
+    }
+
+    .plane {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: linear-gradient(140deg, var(--brand) 0%, #c2ff36 100%);
+      color: #112200;
+      display: grid;
+      place-items: center;
+      font-size: 20px;
+      box-shadow: 0 8px 22px rgba(155, 221, 0, 0.25);
+    }
+
+    .brand-lockup {
+      display: grid;
+      gap: 2px;
+      line-height: 1.1;
+    }
+
+    .brand-main {
+      font-size: 21px;
+      color: var(--brand);
+      text-transform: lowercase;
+      letter-spacing: 0.3px;
+      font-weight: 900;
+    }
+
+    .brand-sub {
+      font-size: 11px;
+      text-transform: uppercase;
+      color: #9db0d6;
+      letter-spacing: 1px;
+      font-weight: 700;
+    }
+
+    .lang-buttons {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .lang-btn {
+      border: 1px solid var(--line);
+      background: #0f1830;
+      color: var(--text);
+      padding: 8px 12px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.2s ease;
+    }
+
+    .lang-btn:hover { border-color: var(--accent); }
+    .lang-btn.active {
+      background: var(--brand);
+      color: #122100;
+      border-color: var(--brand);
+    }
+
+    .hero {
+      background: linear-gradient(140deg, rgba(59, 164, 255, 0.16), rgba(155, 221, 0, 0.12));
+      border: 1px solid #35518b;
+      border-radius: 20px;
+      padding: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .brand-strip {
+      margin: -28px -28px 18px;
+      padding: 10px 16px;
+      background: linear-gradient(90deg, var(--brand) 0 24%, #0f1f3f 24% 100%);
+      color: #102000;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      font-size: 12px;
+    }
+
+    .brand-strip span {
+      color: #d9e8ff;
+      margin-left: 12px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -30px;
+      top: -30px;
+      width: 240px;
+      height: 240px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(155, 221, 0, 0.28), transparent 70%);
+    }
+
+    .hero-visual {
+      margin-top: 18px;
+      display: grid;
+      gap: 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .flight-track {
+      width: min(760px, 100%);
+      height: 74px;
+      border: 1px solid #335084;
+      border-radius: 999px;
+      background:
+        radial-gradient(circle at 24% 50%, rgba(155, 221, 0, 0.55) 0 7px, transparent 8px),
+        radial-gradient(circle at 52% 50%, rgba(59, 164, 255, 0.65) 0 7px, transparent 8px),
+        radial-gradient(circle at 80% 50%, rgba(155, 221, 0, 0.55) 0 7px, transparent 8px),
+        linear-gradient(90deg, rgba(155, 221, 0, 0.16), rgba(59, 164, 255, 0.22));
+      position: relative;
+      overflow: hidden;
+    }
+
+    .flight-track::before {
+      content: "";
+      position: absolute;
+      left: 16px;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      border-top: 2px dashed rgba(212, 228, 255, 0.45);
+    }
+
+    .flight-track::after {
+      content: "✈";
+      position: absolute;
+      left: 49%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: #102000;
+      background: var(--brand);
+      box-shadow: 0 0 0 5px rgba(155, 221, 0, 0.16);
+      font-size: 16px;
+    }
+
+    .visual-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chip {
+      padding: 7px 11px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      border: 1px solid #2f4878;
+      background: #111f3c;
+      color: #d9e7ff;
+    }
+
+    .chip.hot {
+      border-color: #6ca8ff;
+      background: #122a57;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(26px, 4vw, 42px);
+      line-height: 1.12;
+      max-width: 780px;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: clamp(15px, 2.2vw, 18px);
+      max-width: 760px;
+    }
+
+    .cta-row {
+      margin-top: 18px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 12px;
+      padding: 11px 16px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-primary {
+      background: var(--brand);
+      color: #102000;
+    }
+
+    .btn-secondary {
+      background: #192746;
+      border: 1px solid #30436f;
+      color: var(--text);
+    }
+
+    .stats-row {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px;
+      max-width: 760px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .stat {
+      border: 1px solid #2f4878;
+      border-radius: 12px;
+      background: rgba(14, 26, 50, 0.8);
+      padding: 10px 12px;
+    }
+
+    .stat strong {
+      display: block;
+      color: var(--brand);
+      font-size: 19px;
+      line-height: 1.1;
+    }
+
+    .stat span {
+      color: #b9c8e6;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .grid {
+      margin-top: 22px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 16px;
+      min-height: 145px;
+    }
+
+    .card h3 {
+      margin: 0 0 10px;
+      font-size: 17px;
+    }
+
+    .route-list {
+      margin: 0;
+      padding-left: 17px;
+      color: #d6e4ff;
+      line-height: 1.5;
+      font-size: 14px;
+    }
+
+    .route-list li { margin-bottom: 3px; }
+
+    .promo {
+      margin-top: 20px;
+      display: grid;
+      gap: 14px;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+
+    .panel {
+      background: linear-gradient(160deg, #122144 0%, #101a31 100%);
+      border: 1px solid #2b3e67;
+      border-radius: 16px;
+      padding: 18px;
+    }
+
+    .panel-title {
+      font-size: 14px;
+      color: var(--brand);
+      margin: 0 0 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      font-weight: 800;
+    }
+
+    .ad-copy {
+      margin: 0;
+      color: #e9f3ff;
+      line-height: 1.55;
+    }
+
+    footer {
+      margin-top: 20px;
+      color: #9cb1da;
+      font-size: 13px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="topbar">
+      <div class="brand">
+        <div class="plane">✈</div>
+        <div class="brand-lockup">
+          <div class="brand-main">airbaltic</div>
+          <div class="brand-sub">Campaign studio</div>
+        </div>
+      </div>
+      <div class="lang-buttons" id="langButtons"></div>
+    </div>
+
+    <section class="hero">
+      <div class="brand-strip">Official route update <span>airBaltic 2026/27 network</span></div>
+      <h1 id="headline"></h1>
+      <p class="subtitle" id="subtitle"></p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#" id="ctaPrimary"></a>
+        <a class="btn btn-secondary" href="#" id="ctaSecondary"></a>
+      </div>
+      <div class="stats-row">
+        <div class="stat"><strong id="statRoutes">14+</strong><span>New routes</span></div>
+        <div class="stat"><strong id="statCities">10</strong><span>Departure cities</span></div>
+        <div class="stat"><strong id="statSeason">2026/27</strong><span>Season launch</span></div>
+      </div>
+      <div class="hero-visual">
+        <div class="flight-track" aria-hidden="true"></div>
+        <div class="visual-chips" id="routeChips"></div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <h3 id="routesA"></h3>
+        <ul class="route-list" id="listA"></ul>
+      </article>
+      <article class="card">
+        <h3 id="routesB"></h3>
+        <ul class="route-list" id="listB"></ul>
+      </article>
+      <article class="card">
+        <h3 id="routesC"></h3>
+        <ul class="route-list" id="listC"></ul>
+      </article>
+      <article class="card">
+        <h3 id="routesD"></h3>
+        <ul class="route-list" id="listD"></ul>
+      </article>
+    </section>
+
+    <section class="promo">
+      <article class="panel">
+        <p class="panel-title" id="socialTitle"></p>
+        <p class="ad-copy" id="socialCopy"></p>
+      </article>
+      <article class="panel">
+        <p class="panel-title" id="premiumTitle"></p>
+        <p class="ad-copy" id="premiumCopy"></p>
+      </article>
+    </section>
+
+    <footer id="footnote"></footer>
+  </div>
+
+  <script>
+    const translations = {
+      en: {
+        label: "English",
+        headline: "New airBaltic routes. More ways to fly in 2026/27.",
+        subtitle: "From Baltic city breaks to winter sun and Lapland adventures. Book early for the best fares.",
+        ctaPrimary: "Book now",
+        ctaSecondary: "View all routes",
+        routesA: "From Riga",
+        listA: ["Kaunas", "Warsaw", "Oulu", "Antalya", "Gothenburg", "Kuusamo"],
+        routesB: "From Tallinn",
+        listB: ["Vienna", "Hamburg"],
+        routesC: "From Gran Canaria",
+        listC: ["Warsaw", "Poznan", "Katowice", "Liege"],
+        routesD: "From Tenerife & Kuusamo",
+        listD: ["Tenerife: Liege, Ljubljana, Palanga", "Kuusamo: Berlin, Hamburg, Manchester, London Gatwick"],
+        socialTitle: "Instagram/Facebook style",
+        socialCopy: "New routes announced by airBaltic for 2026/27. City breaks, winter escapes, and unforgettable north adventures. Book early and travel smarter.",
+        premiumTitle: "Premium print style",
+        premiumCopy: "The world opens wider with airBaltic. Discover newly announced connections across Europe and reserve early for refined, reliable travel.",
+        footnote: "Demo ad page created for campaign drafting. Please verify final route schedule before publication."
+      },
+      lv: {
+        label: "Latviski",
+        headline: "Jaunie airBaltic maršruti. Vairāk iespēju lidot 2026./27. gadā.",
+        subtitle: "No Baltijas pilsētu ceļojumiem līdz ziemas saules atpūtai un Lapzemes piedzīvojumiem. Rezervē laikus labākām cenām.",
+        ctaPrimary: "Rezervēt tagad",
+        ctaSecondary: "Skatīt maršrutus",
+        routesA: "No Rīgas",
+        listA: ["Kauņa", "Varšava", "Oulu", "Antālija", "Gēteborga", "Kuusamo"],
+        routesB: "No Tallinas",
+        listB: ["Vīne", "Hamburga"],
+        routesC: "No Grankanārijas",
+        listC: ["Varšava", "Poznaņa", "Katovice", "Ljēža"],
+        routesD: "No Tenerifes un Kuusamo",
+        listD: ["Tenerife: Ljēža, Ļubļana, Palanga", "Kuusamo: Berlīne, Hamburga, Mančestra, Londona Getvika"],
+        socialTitle: "Instagram/Facebook stils",
+        socialCopy: "airBaltic paziņo jaunus maršrutus 2026./27. gadam. Pilsētu ceļojumi, ziemas atpūta un ziemeļu piedzīvojumi. Rezervē laikus un ceļo gudrāk.",
+        premiumTitle: "Premium drukas stils",
+        premiumCopy: "Pasaule kļūst tuvāka ar airBaltic. Atklāj jaunus maršrutus Eiropā un rezervē laikus kvalitatīvam, uzticamam ceļojumam.",
+        footnote: "Demonstrācijas reklāmas lapa kampaņas skicēm. Pirms publicēšanas pārbaudiet gala lidojumu grafiku."
+      },
+      lt: {
+        label: "Lietuviu",
+        headline: "Nauji airBaltic marsrutai. Daugiau skrydziu 2026/27 m.",
+        subtitle: "Nuo Baltijos miestų savaitgaliu iki ziemos saules ir Laplandijos nuotykiu. Uzsisakykite anksciau, kad gautumete geriausias kainas.",
+        ctaPrimary: "Uzsakyti dabar",
+        ctaSecondary: "Perziureti marsrutus",
+        routesA: "Is Rygos",
+        listA: ["Kaunas", "Varsuva", "Oulu", "Antalija", "Geteborgas", "Kuusamas"],
+        routesB: "Is Talino",
+        listB: ["Viena", "Hamburgas"],
+        routesC: "Is Gran Kanarijos",
+        listC: ["Varsuva", "Poznane", "Katovicai", "Liezas"],
+        routesD: "Is Tenerifes ir Kuusamo",
+        listD: ["Tenerife: Liezas, Liubliana, Palanga", "Kuusamas: Berlynas, Hamburgas, Mancesteris, Londonas Getvikas"],
+        socialTitle: "Instagram/Facebook stilius",
+        socialCopy: "airBaltic paskelbe naujus 2026/27 m. marsrutus. Miestu savaitgaliai, ziemos kryptys ir nepamirstami siaures nuotykiai. Rezervuokite anksciau.",
+        premiumTitle: "Premium spaudos stilius",
+        premiumCopy: "Su airBaltic pasaulis tampa arciau. Atraskite naujai paskelbtus marsrutus Europoje ir rezervuokite anksciau kokybiskai kelionei.",
+        footnote: "Demonstracinis reklamos puslapis kampanijos juodrasciui. Pries publikuojant patikrinkite galutinius tvarkarascius."
+      },
+      et: {
+        label: "Eesti",
+        headline: "Uued airBaltic liinid. Rohkem voimalusi lennata 2026/27.",
+        subtitle: "Baltikumi linnapuhkustest talvise paikese ja Lapimaa seiklusteni. Broneeri varakult, et saada parim hind.",
+        ctaPrimary: "Broneeri kohe",
+        ctaSecondary: "Vaata koiki liine",
+        routesA: "Riia valjumised",
+        listA: ["Kaunas", "Varssavi", "Oulu", "Antalya", "Goteborg", "Kuusamo"],
+        routesB: "Tallinna valjumised",
+        listB: ["Viin", "Hamburg"],
+        routesC: "Gran Canarialt",
+        listC: ["Varssavi", "Poznan", "Katowice", "Liege"],
+        routesD: "Tenerifelt ja Kuusamost",
+        listD: ["Tenerife: Liege, Ljubljana, Palanga", "Kuusamo: Berliin, Hamburg, Manchester, London Gatwick"],
+        socialTitle: "Instagram/Facebook stiil",
+        socialCopy: "airBaltic teatab uutest 2026/27 liinidest. Linnareisid, talvepuhkused ja pohjamaised seiklused. Broneeri varakult ja reisi targemalt.",
+        premiumTitle: "Premium trukireklaam",
+        premiumCopy: "Maailm avaneb airBalticuga laiemalt. Avasta uued liinid ule Euroopa ja broneeri varakult kvaliteetseks reisikogemuseks.",
+        footnote: "Reklaami demo koduleht kampaania mustandiks. Enne avaldamist kinnita loplik lennuplaan."
+      },
+      de: {
+        label: "Deutsch",
+        headline: "Neue airBaltic Routen. Mehr Flugmoglichkeiten 2026/27.",
+        subtitle: "Von baltischen Stadtereisen bis Wintersonne und Lappland-Abenteuern. Jetzt fruh buchen und die besten Preise sichern.",
+        ctaPrimary: "Jetzt buchen",
+        ctaSecondary: "Alle Routen ansehen",
+        routesA: "Ab Riga",
+        listA: ["Kaunas", "Warschau", "Oulu", "Antalya", "Goteborg", "Kuusamo"],
+        routesB: "Ab Tallinn",
+        listB: ["Wien", "Hamburg"],
+        routesC: "Ab Gran Canaria",
+        listC: ["Warschau", "Posen", "Kattowitz", "Luttich"],
+        routesD: "Ab Teneriffa & Kuusamo",
+        listD: ["Teneriffa: Luttich, Ljubljana, Palanga", "Kuusamo: Berlin, Hamburg, Manchester, London Gatwick"],
+        socialTitle: "Instagram/Facebook Stil",
+        socialCopy: "Neue airBaltic Routen fur 2026/27. City-Trips, Winterziele und unvergessliche nordische Abenteuer. Fruh buchen lohnt sich.",
+        premiumTitle: "Premium Print Stil",
+        premiumCopy: "Mit airBaltic wird die Welt groBer. Entdecken Sie neue Verbindungen in Europa und buchen Sie fruh fur eine hochwertige Reiseerfahrung.",
+        footnote: "Demo-Anzeigenseite fur Kampagnenentwurfe. Bitte finalen Flugplan vor Veroffentlichung prufen."
+      }
+    };
+
+    const ids = {
+      headline: "headline",
+      subtitle: "subtitle",
+      ctaPrimary: "ctaPrimary",
+      ctaSecondary: "ctaSecondary",
+      routesA: "routesA",
+      routesB: "routesB",
+      routesC: "routesC",
+      routesD: "routesD",
+      socialTitle: "socialTitle",
+      socialCopy: "socialCopy",
+      premiumTitle: "premiumTitle",
+      premiumCopy: "premiumCopy",
+      footnote: "footnote"
+    };
+
+    function renderList(targetId, items) {
+      const el = document.getElementById(targetId);
+      el.innerHTML = items.map((item) => `<li>${item}</li>`).join("");
+    }
+
+    function setLanguage(lang) {
+      const t = translations[lang];
+      Object.keys(ids).forEach((key) => {
+        document.getElementById(ids[key]).textContent = t[key];
+      });
+      renderList("listA", t.listA);
+      renderList("listB", t.listB);
+      renderList("listC", t.listC);
+      renderList("listD", t.listD);
+      const chips = [...t.listA.slice(0, 4), ...t.listB.slice(0, 2)];
+      document.getElementById("routeChips").innerHTML = chips
+        .map((item, index) => `<span class="chip ${index < 2 ? "hot" : ""}">${item}</span>`)
+        .join("");
+
+      document.querySelectorAll(".lang-btn").forEach((btn) => {
+        btn.classList.toggle("active", btn.dataset.lang === lang);
+      });
+      document.documentElement.lang = lang;
+    }
+
+    function buildLanguageButtons() {
+      const root = document.getElementById("langButtons");
+      Object.keys(translations).forEach((lang) => {
+        const btn = document.createElement("button");
+        btn.className = "lang-btn";
+        btn.dataset.lang = lang;
+        btn.type = "button";
+        btn.textContent = translations[lang].label;
+        btn.addEventListener("click", () => setLanguage(lang));
+        root.appendChild(btn);
+      });
+    }
+
+    buildLanguageButtons();
+    setLanguage("en");
+  </script>
+</body>
+</html>
