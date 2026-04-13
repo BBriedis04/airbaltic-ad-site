@@ -826,8 +826,25 @@
       });
     }
 
+    function wireCtaActions() {
+      const primary = document.getElementById("ctaPrimary");
+      const secondary = document.getElementById("ctaSecondary");
+      const routesSection = document.getElementById("routesSection");
+
+      primary.href = "https://www.airbaltic.com/en/book-flights";
+      primary.target = "_blank";
+      primary.rel = "noopener noreferrer";
+
+      secondary.href = "#routesSection";
+      secondary.addEventListener("click", (event) => {
+        event.preventDefault();
+        routesSection.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    }
+
     setupRouteMap();
     buildLanguageButtons();
+    wireCtaActions();
     setLanguage("en");
   </script>
 </body>
